@@ -1,0 +1,28 @@
+import requests
+
+def get_github_security_overall_count(cookie_string):
+    url = 'https://github.com/kestra-io/kestra/security/overall-count'
+    headers = {
+        'priority': 'u=1, i',
+        'x-requested-with': 'XMLHttpRequest',
+        'cookie': cookie_string
+    }
+
+    response = requests.get(url, headers=headers)
+
+    if response.status_code == 200:
+        return {
+            'content-type': response.headers.get('Content-Type'),
+            'content-length': response.headers.get('Content-Length'),
+            'status-code': response.status_code,
+            'response-body': response.text
+        }
+    else:
+        return {
+            'error': f'HTTP {response.status_code}',
+            'status-code': response.status_code
+        }
+```
+
+This function makes a GET request to the specified GitHub URL with the required headers and returns a dictionary containing some header values and the response body if the request is successful. If there is an error, it returns the HTTP status code. You can use this function by passing the cookie string as an argument to it.
+
